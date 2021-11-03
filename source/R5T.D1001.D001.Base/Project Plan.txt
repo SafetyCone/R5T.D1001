@@ -1,0 +1,3 @@
+R5T.D1001.Base - Service definitions for IServiceA and IServiceB dummy services for use when dummy services are useful.
+
+GOALS:

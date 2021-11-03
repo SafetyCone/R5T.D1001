@@ -7,8 +7,8 @@ using R5T.T0064;
 namespace R5T.D1001
 {
     [ServiceDefinitionMarker]
-    public interface IServiceX : IServiceDefinition
+    public interface IServiceZ : IServiceDefinition
     {
-        Task RunX();
+        Task RunZ();
     }
 }

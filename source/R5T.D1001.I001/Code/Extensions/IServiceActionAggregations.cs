@@ -1,50 +1,48 @@
-using System;
+﻿using System;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using R5T.T0062;
 using R5T.T0063;
 
 
 namespace R5T.D1001.I001
 {
-    public static class IServiceCollectionExtensions
+    public static class IServiceActionAggregations
     {
         /// <summary>
         /// Adds the <see cref="ServiceZ"/> implementation of <see cref="IServiceX"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static IServiceCollection AddServiceZ(this IServiceCollection services,
+        public static IServiceAction<IServiceZ> AddServiceZAction(this IServiceAction _,
             IServiceAction<IServiceX> serviceXAction,
             IServiceAction<IServiceY> serviceYAction)
         {
-            services.AddSingleton<IServiceZ, ServiceZ>()
-                .Run(serviceXAction)
-                .Run(serviceYAction)
-                ;
+            var serviceAction = _.New<IServiceZ>(services => services.AddServiceZ(
+                serviceXAction,
+                serviceYAction));
 
-            return services;
+            return serviceAction;
         }
 
         /// <summary>
         /// Adds the <see cref="ServiceY"/> implementation of <see cref="IServiceY"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static IServiceCollection AddServiceY(this IServiceCollection services,
+        public static IServiceAction<IServiceY> AddServiceYAction(this IServiceAction _,
             IServiceAction<IServiceX> serviceXAction)
         {
-            services.AddSingleton<IServiceY, ServiceY>()
-                .Run(serviceXAction)
-                ;
+            var serviceAction = _.New<IServiceY>(services => services.AddServiceY(
+                serviceXAction));
 
-            return services;
+            return serviceAction;
         }
 
         /// <summary>
         /// Adds the <see cref="ServiceX"/> implementation of <see cref="IServiceX"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static IServiceCollection AddServiceX(this IServiceCollection services)
+        public static IServiceAction<IServiceX> AddServiceXAction(this IServiceAction _)
         {
-            services.AddSingleton<IServiceX, ServiceX>();
-
-            return services;
+            var serviceAction = _.New<IServiceX>(services => services.AddServiceX());
+            return serviceAction;
         }
     }
 }
